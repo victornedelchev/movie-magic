@@ -1,49 +1,53 @@
-const Movie = require('../models/Movie');
-const Cast = require('../models/Cast');
+const Movie = require("../models/Movie");
+const Cast = require("../models/Cast");
 
 exports.getAll = () => Movie.find();
 
-exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
-
+exports.getOne = (movieId) => Movie.findById(movieId).populate("casts");
 
 // TODO: fIlter result in mongoDB
-exports.search = async (title, genre, year) => {
-    let result = await Movie.find().lean();
+exports.search = (title, genre, year) => {
+  let query = {};
+  let query2 = Movie.find({});
 
-    if (title) {
-        result = result.filter(movie => movie.title.toLocaleLowerCase().includes(title.toLocaleLowerCase()));
-    }
+  if (title) {
+    // query.title = new RegExp(title, "i");
+    query2 = query2.find({ title: new RegExp(title, "i") });
+  }
 
-    if (genre) {
-        result = result.filter(movie => movie.genre.toLocaleLowerCase().includes(genre.toLocaleLowerCase()));
-    }
+  if (genre) {
+    // query.genre = genre.toLowerCase();
+    query2 = query2.find({ genre: genre.toLowerCase() });
+  }
 
-    if (year) {
-        result = result.filter(movie => movie.year === year);
-    }
+  if (year) {
+    // query.year = year;
+    query2 = query2.find({ year });
+  }
 
-    return result;
+  // return Movie.find(query);
+  return query2;
 };
 
 exports.create = (movieData) => Movie.create(movieData);
 
 exports.attach = async (movieId, castId) => {
-    const movie = await this.getOne(movieId);
-    // This is optional and we don't need it this case
-    // const cast = await Cast.findById(castId);
-    // cast.movies.push(movie);
-    // await cast.save();
+  const movie = await this.getOne(movieId);
+  // This is optional and we don't need it this case
+  const cast = await Cast.findById(castId);
+  // cast.movies.push(movie);
+  await cast.save();
 
-    // TODO: validate castId if exist
-    // TODO: Validate is cast already added
-    movie.casts.push(cast);
+  // TODO: validate castId if exist
+  // TODO: Validate is cast already added
+  movie.casts.push(cast);
 
-    await movie.save();
+  await movie.save();
 
-    return movie;
-    // return Movie.findByIdAndUpdate(movieId, {
-    //     $push: {
-    //         casts: castId
-    //     }
-    // });
+  return movie;
+  // return Movie.findByIdAndUpdate(movieId, {
+  //     $push: {
+  //         casts: castId
+  //     }
+  // });
 };
