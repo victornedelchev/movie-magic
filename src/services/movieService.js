@@ -1,8 +1,9 @@
 const Movie = require('../models/Movie');
+const Cast = require('../models/Cast');
 
 exports.getAll = () => Movie.find();
 
-exports.getOne = (movieId) => Movie.findById(movieId);
+exports.getOne = (movieId) => Movie.findById(movieId).populate('casts');
 
 
 // TODO: fIlter result in mongoDB
@@ -28,12 +29,18 @@ exports.create = (movieData) => Movie.create(movieData);
 
 exports.attach = async (movieId, castId) => {
     const movie = await this.getOne(movieId);
+    // This is optional and we don't need it this case
+    // const cast = await Cast.findById(castId);
+    // cast.movies.push(movie);
+    // await cast.save();
 
     // TODO: validate castId if exist
     // TODO: Validate is cast already added
-    movie.casts.push(castId);
+    movie.casts.push(cast);
 
-    return movie.save();
+    await movie.save();
+
+    return movie;
     // return Movie.findByIdAndUpdate(movieId, {
     //     $push: {
     //         casts: castId
