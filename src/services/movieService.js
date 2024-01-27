@@ -2,11 +2,8 @@ const Movie = require('../models/Movie');
 
 exports.getAll = () => Movie.find();
 
-exports.getOne = (movieId) => {
-   const movie = Movie.findById(movieId);
+exports.getOne = (movieId) => Movie.findById(movieId);
    
-   return movie;
-}; 
 
 // TODO: fIlter result in mongoDB
 exports.search = async (title, genre, year) => {
