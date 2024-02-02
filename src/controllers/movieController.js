@@ -27,7 +27,7 @@ router.get('/movies/:movieId', async (req, res) => {
     // TODO: This is not perfect, use handlebars helpers
     movie.rating = new Array(Number(movie.rating)).fill(true);
 
-    res.render('details', {
+    res.render('/movie/details', {
         movie
     });
 });
