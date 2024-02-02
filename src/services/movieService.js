@@ -31,6 +31,8 @@ exports.search = (title, genre, year) => {
 
 exports.create = (movieData) => Movie.create(movieData);
 
+exports.edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
+
 exports.attach = async (movieId, castId) => {
   const movie = await this.getOne(movieId);
   // This is optional and we don't need it this case
@@ -51,3 +53,5 @@ exports.attach = async (movieId, castId) => {
   //     }
   // });
 };
+
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
