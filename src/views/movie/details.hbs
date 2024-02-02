@@ -14,19 +14,21 @@
             <p class="card-year">Year: {{movie.year}}</p>
             <p class="card-ranking">Rating:
               <span id="stars">{{#each movie.rating}}
-                  &#x2605;
-                {{/each}}</span></p>
+                &#x2605;
+                {{/each}}</span>
+            </p>
           </div>
 
         </div>
 
         <p class="disc">Description: {{movie.description}}</p>
       </div>
-
+      {{#if isOwner}}
       <div class="details-btn">
         <a href="/movies/{{movie._id}}/edit" id="edit-button">Edit</a>
         <a href="#" id="delete-button">Delete</a>
       </div>
+      {{/if}}
     </div>
 
     <div class="card_right">
@@ -37,23 +39,23 @@
 
   <div class="main-cast-card">
     {{#each movie.casts}}
-      <div class="cast-card">
-        <div class="card-img">
-          <img src="{{castImage}}" alt="{{name}}" />
-        </div>
-        <div class="cast-info">
-          <h1>{{name}}</h1>
-          <h3>Age: {{age}}</h3>
-          <h3>Born: {{born}}</h3>
-          <h3>Name in Movie: {{nameInMovie}}</h3>
-        </div>
+    <div class="cast-card">
+      <div class="card-img">
+        <img src="{{castImage}}" alt="{{name}}" />
       </div>
+      <div class="cast-info">
+        <h1>{{name}}</h1>
+        <h3>Age: {{age}}</h3>
+        <h3>Born: {{born}}</h3>
+        <h3>Name in Movie: {{nameInMovie}}</h3>
+      </div>
+    </div>
     {{else}}
-      <div class="main-cast-card">
-        <div class="no-cast">
-          <p>There are no casts added yet...</p>
-        </div>
+    <div class="main-cast-card">
+      <div class="no-cast">
+        <p>There are no casts added yet...</p>
       </div>
+    </div>
     {{/each}}
   </div>
 
