@@ -52,7 +52,7 @@ router.post('/movies/:movieId/attach', async (req, res) => {
 });
 
 router.get('/movies/:movieId/edit', (req, res) => {
-    res.render('movie/edit')
+    res.render('movie/edit');
 })
 
 module.exports = router;
