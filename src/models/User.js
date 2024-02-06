@@ -8,13 +8,17 @@ const bcrypt = require('bcrypt');
 const userSchema = new Schema({
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required!'],
     lowercase: true,
-    unique: true
+    unique: true,
+    match: [/^[a-zA-Z0-9]+@[A-Za-z0-9]+\.[a-z0-9]+$/g, 'Invalid email!'],
+    minLength: [5, 'Email should be at least 10 characters long!'],
   },
   password: {
     type: String,
-    required: true,
+    required: [true, 'Password is required!'],
+    match: [/^[a-zA-Z0-9]+$/, 'Password should consist only of English letters and digits'],
+    minLength: [, 'Password should be at least 10 characters long!'], 
   },
 });
 
@@ -27,7 +31,7 @@ userSchema.virtual('rePassword')
   .set(function (value) {
     // Validate
     if (value !== this.password) {
-      throw new MongooseError('Password miss match!');
+      throw new MongooseError('Password mismatch!');
     }
   });
 
