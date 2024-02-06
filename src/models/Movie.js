@@ -3,37 +3,44 @@ const mongoose = require('mongoose');
 const movieSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true,
+        required: [true, 'Title is required!'],
+        minLength: [5, 'Title mist be at least 5 characters long!'],
+        match: [/^[A-Za-z0-9\s]+$/g, 'Title could be English letters, digits, and white spaces'],
     },
     genre: {
         type: String,
-        required: true,
+        required: [true, 'Genre is required!'],
         lowercase: true,
+        minLength: [5, 'Genre mist be at least 5 characters long!'],
+        match: [/^[A-Za-z0-9\s]+$/g, 'Title could be English letters, digits, and white spaces'],
     },
     director:  {
         type: String,
-        required: true,
+        required: [true, 'Director is required!'],
+        minLength: [5, 'Director mist be at least 5 characters long!'],
+        match: [/^[A-Za-z0-9\s]+$/g, 'Title could be English letters, digits, and white spaces'],
     },
     year: {
         type: Number,
-        required: true,
+        required: [true, 'Year is required!'],
         min: 1900,
-        max: 2030,
+        max: 2024,
     },
     rating: {
         type: Number,
-        required: true,
+        required: [true, 'Rating is required!'],
         min: 1,
         max: 5,
     },
     description: {
         type: String,
-        required: true,
-        maxLength: 1000,
+        required: [true, 'Description is required!'],
+        manLength: 20,
+        match: [/^[A-Za-z0-9\s]+$/g, 'Title could be English letters, digits, and white spaces'],
     },
     imageUrl: {
         type: String,
-        required: true,
+        required: [true, 'Image URL is required!'],
         match: /^https?:\/\//,
     },
     casts: [{
