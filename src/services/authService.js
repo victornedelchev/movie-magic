@@ -3,8 +3,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('../lub/jwt');
 const { SECRET } = require('../config/config');
 
-// TODO: check user user exist
-exports.register = (userData) => User.create(userData);
+exports.register = (userData) => {
+    const user = User.findOne({ email: userData.email });
+
+    if(user) {
+        throw new Error('Email already exist!');
+    }
+
+    User.create(userData);
+};
 
 exports.login = async (email, password) => {
     // Get user from db
