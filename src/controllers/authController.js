@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const mongoose = require('mongoose');
 const authService = require('../services/authService');
+const { getErrorMessage } = require('../utils/errorUtil');
 
 router.get('/register', (req, res) => {
     res.render('auth/register');
@@ -14,15 +14,9 @@ router.post('/register', async (req, res) => {
 
         res.redirect('/auth/login');
     } catch(err) {
-        let message = '';
+        const message = getErrorMessage(err);
 
-        if (err instanceof mongoose.MongooseError) {
-            message = Object.values(err.errors).at(0).message;
-        } else if (err instanceof Error) {
-            message = err.message;
-        }
-
-        res.render('auth/register', { error: message });
+        res.render('auth/register', {...userData,  error: message });
     }
 });
 
