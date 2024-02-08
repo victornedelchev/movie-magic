@@ -18,7 +18,7 @@ const userSchema = new Schema({
     type: String,
     required: [true, 'Password is required!'],
     match: [/^[a-zA-Z0-9]+$/, 'Password should consist only of English letters and digits'],
-    minLength: [, 'Password should be at least 10 characters long!'], 
+    minLength: [6, 'Password should be at least 6 characters long!'], 
   },
 });
 
@@ -31,7 +31,7 @@ userSchema.virtual('rePassword')
   .set(function (value) {
     // Validate
     if (value !== this.password) {
-      throw new MongooseError('Password mismatch!');
+      throw new Error('Password mismatch!');
     }
   });
 
